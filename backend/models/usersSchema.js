@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const faker = require("faker");
 
 //we will create a schema
 
@@ -14,8 +15,10 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      minlength: 3,
+      minlength: 2,
     },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -24,5 +27,14 @@ const userSchema = new Schema(
 
 //this is a constructor thats why we use upper  case
 //IT CREATES A "users" collection on  "" database
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const UserCollection = mongoose.model("User", userSchema);
+// for (let i = 0; i < 30; i++) {
+//   const record = new UserCollection({
+//     username: faker.name.findName(),
+//     email: faker.internet.email(),
+//     password: faker.internet.password,
+//   });
+//   record.save();
+// }
+
+module.exports = UserCollection;

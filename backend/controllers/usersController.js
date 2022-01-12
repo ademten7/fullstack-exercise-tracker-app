@@ -1,7 +1,7 @@
-const User = require("../models/usersSchema");
+const UserCollection = require("../models/usersSchema");
 const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find(); //mongoose method
+    const users = await UserCollection.find(); //mongoose method
     res.send({ success: true, data: users });
   } catch (err) {
     next(err);
@@ -10,7 +10,7 @@ const getUsers = async (req, res, next) => {
 
 const createUsers = async (req, res, next) => {
   try {
-    const user = new User(req.body);
+    const user = new UserCollection(req.body);
     await user.save();
     res.json({ success: true, data: user });
   } catch (err) {
@@ -20,9 +20,13 @@ const createUsers = async (req, res, next) => {
 
 const updateOrderPut = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const user = await UserCollection.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
     res.send({ success: true, data: user });
   } catch (err) {
     next(err);
@@ -30,9 +34,13 @@ const updateOrderPut = async (req, res, next) => {
 };
 const updateUsersPatch = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const user = await UserCollection.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
     res.send({ success: true, data: user });
   } catch (err) {
     next(err);
@@ -41,7 +49,7 @@ const updateUsersPatch = async (req, res, next) => {
 
 const deleteUsers = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await UserCollection.findByIdAndDelete(req.params.id);
     res.send({ success: true, data: user });
   } catch (err) {
     next(err);
@@ -50,7 +58,7 @@ const deleteUsers = async (req, res, next) => {
 
 const getSingleUser = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await UserCollection.findOne({ _id: req.params.id });
     res.send({ success: true, data: user });
   } catch (err) {
     next(err);

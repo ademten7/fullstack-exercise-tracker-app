@@ -9,6 +9,7 @@ const {
   deleteUsers,
   getSingleUser,
 } = require("../controllers/usersController");
+const isValidateUser = require("../middlewares/validationRules");
 
 //change also app js
 
@@ -27,8 +28,9 @@ const users = JSON.parse(data).users; */
 //endpoint /users
 router.get("/", getUsers);
 
+//Register
 //Create new User
-router.post("/add", createUsers);
+router.post("/add", isValidateUser, createUsers);
 
 //Request method PUT (replacing existing resource) and PATCH (updating existing resource)
 //Update user

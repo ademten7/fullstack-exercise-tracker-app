@@ -7,13 +7,13 @@ const exerciseSchema = new Schema(
     username: { type: String, required: true },
     description: { type: String, required: true },
     duration: { type: Number, required: true },
-    date: { type: Date, required: true, default: Date.now },
+    date: { type: Date, required: true },
   },
   {
     timestamps: true,
   }
 );
 
-const Exercise = mongoose.model("Exercise", exerciseSchema);
+const ExerciseCollection = mongoose.model("Exercise", exerciseSchema);
 
-module.exports = Exercise;
+module.exports = ExerciseCollection;
