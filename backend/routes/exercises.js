@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const Exercise = require("../models/exercisesSchema");
+const {
+  getExercises,
+  createExercise,
+  updateExercisePut,
+  updateExercisePatch,
+  deleteExercise,
+  getSingleExercise,
+} = require("../controllers/exerciseControllers");
 
 //change also app js
 
@@ -17,71 +25,24 @@ const users = JSON.parse(data).users; */
 
 //Read Users
 //endpoint /users
-router.get("/", async (req, res, next) => {
-  try {
-    const exercises = await Exercise.find();
-    res.send({ success: true, data: exercises });
-  } catch (err) {
-    next(err);
-  }
-});
+router.get("/", getExercises);
 
 //Create new User
-router.post("/add", async (req, res, next) => {
-  try {
-    const exercise = new Exercise(req.body);
-    await exercise.save();
-    res.json({ success: true, data: exercise });
-  } catch (err) {
-    next(err);
-  }
-});
+router.post("/add", createExercise);
 
 //Request method PUT (replacing existing resource) and PATCH (updating existing resource)
 //Update user
-router.put("/update/:id", async (req, res, next) => {
-  try {
-    const exercise = await Exercise.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.send({ success: true, data: exercise });
-  } catch (err) {
-    next(err);
-  }
-});
+router.put("/update/:id", updateExercisePut);
 
 //Patch
-router.patch("/update/:id", async (req, res, next) => {
-  try {
-    const exercise = await Exercise.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.send({ success: true, data: exercise });
-  } catch (err) {
-    next(err);
-  }
-});
+router.patch("/update/:id", updateExercisePatch);
 
 //Delete request
 //delete exercise
-router.delete("/:id", async (req, res, next) => {
-  try {
-    const exercise = await Exercise.findByIdAndDelete(req.params.id);
-    res.send({ success: true, data: exercise });
-  } catch (err) {
-    next(err);
-  }
-});
+router.delete("/:id", deleteExercise);
 
 //Read exercise
 //endpoint /records/:id
-router.get("/:id", async (req, res, next) => {
-  try {
-    const exercise = await Exercise.findOne({ _id: req.params.id });
-    res.send({ success: true, data: exercise });
-  } catch (err) {
-    next(err);
-  }
-});
+router.get("/:id", getSingleExercise);
 
 module.exports = router;

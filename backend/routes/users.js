@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/usersSchema");
+const {
+  getUsers,
+  createUsers,
+  updateOrderPut,
+  updateUsersPatch,
+  deleteUsers,
+  getSingleUser,
+} = require("../controllers/usersController");
 
 //change also app js
 
@@ -17,71 +25,24 @@ const users = JSON.parse(data).users; */
 
 //Read Users
 //endpoint /users
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await User.find(); //mongoose method
-    res.send({ success: true, data: users });
-  } catch (err) {
-    next(err);
-  }
-});
+router.get("/", getUsers);
 
 //Create new User
-router.post("/add", async (req, res, next) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
-    res.json({ success: true, data: user });
-  } catch (err) {
-    next(err);
-  }
-});
+router.post("/add", createUsers);
 
 //Request method PUT (replacing existing resource) and PATCH (updating existing resource)
 //Update user
-router.put("/update/:id", async (req, res, next) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.send({ success: true, data: user });
-  } catch (err) {
-    next(err);
-  }
-});
+router.put("/update/:id", updateOrderPut);
 
 //Patch
-router.patch("/update/:id", async (req, res, next) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.send({ success: true, data: user });
-  } catch (err) {
-    next(err);
-  }
-});
+router.patch("/update/:id", updateUsersPatch);
 
 //Delete request
 //delete user
-router.delete("/:id", async (req, res, next) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    res.send({ success: true, data: user });
-  } catch (err) {
-    next(err);
-  }
-});
+router.delete("/:id", deleteUsers);
 
 //Read user
 //endpoint /users/:id
-router.get("/:id", async (req, res, next) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id });
-    res.send({ success: true, data: user });
-  } catch (err) {
-    next(err);
-  }
-});
+router.get("/:id", getSingleUser);
 
 module.exports = router;
